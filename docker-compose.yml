@@ -1,3 +1,4 @@
+version: '3'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
@@ -5,13 +6,14 @@ services:
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
+      - xpack.security.http.ssl.enabled=false  # Desabilitar SSL/HTTPS
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
-      - 9200:9200
-      - 9300:9300
+      - 9200:9200  # Expor porta 9200 para HTTP
+      - 9300:9300  # Porta para comunicação entre nós
     volumes:
       - es_data:/usr/share/elasticsearch/data
 volumes:
